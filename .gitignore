@@ -1,0 +1,30 @@
+# Virtual environments
+langgraph_project/
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+
+# Local configuration and credentials
+.env
+
+# Database folders
+.db/
+
+# Large files / media assets
+VideoProject4.mp4
+
+# OS generated files
+.DS_Store
+Thumbs.db

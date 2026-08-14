@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: travel-planner-db
+spec:
+  serviceName: travel-planner-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travel-planner-db
+  template:
+    metadata:
+      labels:
+        app: travel-planner-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: langgraph_memory
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: travel-planner-db-service
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: travel-planner-db

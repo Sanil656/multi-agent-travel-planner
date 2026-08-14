@@ -1,0 +1,10 @@
+.git
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.db/
+langgraph_project/
+node_modules/
+.env
+VideoProject4.mp4
