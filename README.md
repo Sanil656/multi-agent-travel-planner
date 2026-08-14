@@ -189,7 +189,7 @@ Every prompt that embeds upstream results (itinerary drafts, MCP tool output, bu
 ### Local Setup
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Sanil656/multi-agent-travel-planner
 cd trip-planner-agent
 
 # 1. Environment variables
@@ -218,6 +218,21 @@ docker compose up --build
 ```
 
 This starts a Postgres 16 container (`db`) with a healthcheck gate, and the Streamlit app container (`web`), wired together with `DATABASE_URL` pointing at the `db` service. Visit **http://localhost:8501**.
+
+#### Quick start from Docker Hub (no Postgres, no local build)
+
+A pre-built image is published at [`sanilgupta1/travel-planner-web`](https://hub.docker.com/r/sanilgupta1/travel-planner-web). This is the fastest way to try the app, but runs with **in-memory checkpointing only** — no persistence across restarts, since there's no Postgres container attached:
+
+```bash
+docker run -p 8501:8501 \
+  -e GROQ_API_KEY=your_groq_key \
+  -e TAVILY_API_KEY=your_tavily_key \
+  -e AVIATION_STACK_API_KEY=your_aviationstack_key \
+  -e OPENWEATHER_API_KEY=your_openweather_key \
+  sanilgupta1/travel-planner-web:latest
+```
+
+For persistent conversation memory, use `docker compose up --build` instead, or add `-e DATABASE_URL=<your-postgres-connection-string>` pointed at an external Postgres instance.
 
 ### Kubernetes Deployment
 
